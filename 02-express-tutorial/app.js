@@ -9,3 +9,15 @@ const server = http.createServer((req, res) => {
 server.listen(5000);
 
 // 4:20:04
+
+// Status Codes
+
+// 100 - Information Response
+// 200 - Successful Response
+// 300 - Redirection
+// 400 - Client Error Response
+
+
+// Mime Types
+// type/subtype
+
