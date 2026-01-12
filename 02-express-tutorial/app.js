@@ -6,10 +6,12 @@ const app = express();
 // setup static and middleware
 app.use(express.static("./public")); // gets every resource in the public folder
 
-app.get("/", (req, res) => {
-  // home page
-  res.sendFile(path.resolve(__dirname, "./navbar-app/index.html"));
-});
+// app.get("/", (req, res) => {
+// home page
+// res.sendFile(path.resolve(__dirname, "./navbar-app/index.html"));
+// adding to static assets
+// SSR - service side rendering
+// });
 
 app.all("*", (req, res) => {
   // if every code above does not get used, use this one (error)
