@@ -35,8 +35,30 @@ app.get("/api/products/:productID/reviews/:reviewID", (req, res) => {
   res.send("hello world");
 });
 
+app.get('/api/v1/query', (req, res) => { // req.query will always be a string
+  console.log(req.query); // output would be {name: 'ralph', id: '3'} // depends on what the user puts on the url (key-value pairs) i.e. query?name=ralph&id=3
+  const {search, limit} = req.query
+  let sortedProducts = [...products];
+
+  if (search) {
+    sortedProducts = sortedProducts.filter((product)=>{
+      return product.name.startsWith(search) //?search=ra, or ral, or ralp
+    })
+  }
+  if (limit) {
+    sortedProducts = sortedProducts.slice(0, Number(limit))
+  }
+  if (sortedProducts.length < 1) {
+    //res.status(200).send('no products matched your search');
+    return res.status(200).json({sucess: true, data: []})
+  }
+  res.status(200).json(sortedProducts);
+  // res.send('Hello world');
+})
+
+
 app.listen(5000, () => {
   console.log("Server is listening on port 5000");
 });
 
-// 5:50:44
+// 6:07:34
