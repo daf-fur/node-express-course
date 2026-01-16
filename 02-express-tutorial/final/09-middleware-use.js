@@ -4,6 +4,7 @@ const logger = require("./logger");
 const authorize = require("./authorize");
 //  req => middleware => res
 app.use([logger, authorize]); // .use passes middleware to every route (order matters)
+// to pass multiple middlewares, put them in an array ([])
 // api/home/about/products
 app.get("/", (req, res) => {
   res.send("Home");

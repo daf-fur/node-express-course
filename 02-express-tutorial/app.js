@@ -1,10 +1,10 @@
 const express = require("express");
 const app = express();
 const logger = require("./logger.js");
+const authorize = require("./authorize.js");
 
 // req => middleware => res
-app.use('/api', logger); // passes the middleware for every or any route
-// api/home/about/products,   going to apply to any route after the path [/api]
+app.use([logger, authorize]); // order matters, execution follows the order
 
 app.get("/", (req, res) => {
   res.send("Home");
@@ -19,8 +19,8 @@ app.get("/api/items", (req, res) => {
   res.send("Items");
 });
 
-app.listen(5000, () => {
+app.listen(4000, () => {
   console.log("Server is listening on port 5000");
 });
 
-// 6:07:34
+// 6:34:40
