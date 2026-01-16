@@ -1,30 +1,22 @@
 const express = require("express");
 const app = express();
-const morgan = require("morgan");
-const logger = require("./logger.js");
-const authorize = require("./authorize.js");
+let { people } = require("./data");
 
-// req => middleware => res
-// app.use([logger, authorize]); // order matters, execution follows the order
+// static assets
+app.use(express.static("./methods-public"));
+// parse form data
+app.use(express.urlencoded({ extended: false })); // access to form values
 
-// options for middleware - our own / express/ third party
-
-// app.use(express.static('./public'))
-
-app.use(morgan("tiny"));
-
-app.get("/", (req, res) => {
-  res.send("Home");
+app.get("/api/people", (req, res) => {
+  res.status(200).json({ success: true, data: people });
 });
-app.get("/about", (req, res) => {
-  res.send("About");
-});
-app.get("/api/products", (req, res) => {
-  res.send("Products");
-});
-app.get("/api/items", (req, res) => {
-  console.log(req.user);
-  res.send("Items");
+
+app.post("/login", (req, res) => {
+  const { name } = req.body;
+  if (name) {
+    return res.status(200).send(`Welcome ${name}`);
+  }
+  res.status(401).send("Please Provide Credentials");
 });
 
 app.listen(5000, () => {
