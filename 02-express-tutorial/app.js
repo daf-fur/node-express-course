@@ -4,7 +4,7 @@ const logger = require("./logger.js");
 const authorize = require("./authorize.js");
 
 // req => middleware => res
-app.use([logger, authorize]); // order matters, execution follows the order
+// app.use([logger, authorize]); // order matters, execution follows the order
 
 app.get("/", (req, res) => {
   res.send("Home");
@@ -15,12 +15,14 @@ app.get("/about", (req, res) => {
 app.get("/api/products", (req, res) => {
   res.send("Products");
 });
-app.get("/api/items", (req, res) => {
+app.get("/api/items", [logger, authorize], (req, res) => {
+  console.log(req.user);
   res.send("Items");
 });
 
 app.listen(4000, () => {
   console.log("Server is listening on port 5000");
 });
+
 
 // 6:34:40
