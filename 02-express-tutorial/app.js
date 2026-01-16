@@ -3,17 +3,24 @@ const app = express();
 const logger = require("./logger.js");
 
 // req => middleware => res
+app.use('/api', logger); // passes the middleware for every or any route
+// api/home/about/products,   going to apply to any route after the path [/api]
 
-app.get("/", logger, (req, res) => {
+app.get("/", (req, res) => {
   res.send("Home");
 });
-app.get("/about", logger, (req, res) => {
+app.get("/about", (req, res) => {
   res.send("About");
+});
+app.get("/api/products", (req, res) => {
+  res.send("Products");
+});
+app.get("/api/items", (req, res) => {
+  res.send("Items");
 });
 
 app.listen(5000, () => {
   console.log("Server is listening on port 5000");
 });
-
 
 // 6:07:34
